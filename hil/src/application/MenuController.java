@@ -37,7 +37,7 @@ public class MenuController implements Initializable  {
 	    private ComboBox<String> CashPayment;
 
 	    @FXML
-	    private Button Checkout;
+	    private GridPane CheckoutGrid;
 
 	    @FXML
 	    private Label Discount;
@@ -63,16 +63,16 @@ public class MenuController implements Initializable  {
 
 	    @FXML
 	    private TextField Tableno;
+	  
 	    
 	    int CartRow=1;
 
-    private List<Product> products ;
-    private List<CartController> cartproducts ;
+    private ArrayList<Product> products ;
+    private ArrayList<CartController> cartproducts ;
     private Image image;
 
     private List<ItemController> itemController;
-    private boolean CheckOutDone=false;
-    boolean CheckedOut=false;
+
    
     ObservableList<String> items =FXCollections.observableArrayList (
     		  " ",  " ", "Appetizers", "Main Course", "Soups", "Beverages" , "Midnight Deals", "Tuesday Specials" , "Platters");
@@ -92,28 +92,48 @@ public class MenuController implements Initializable  {
     	Double value=Double.parseDouble(Discount.getText());
     return value;
     }
-  
-    public void setCheckedOut(boolean value)
-    {
-    	CheckedOut=value;
-    }
-    public boolean getCheckedOut()
-    {
-    return CheckedOut;
-   
-    }
-  
     
-    public void setCheckOutDone(boolean value)
+    public void setTotal(Double value)
     {
-          CheckOutDone=true;
+    	Total.setText(Double.toString(value));
     }
-    public boolean getCheckOutDone()
+    public Double getTotal()
     {
+    	Double value=0.0;
+    	if(Total.getText()!="0")
+    	value=Double.parseDouble(Total.getText());
     
-    return CheckOutDone;
+    return value;
     }
-  
+
+    public void ClearCart()
+    {
+    	int size=cartproducts.size();
+    	cartproducts.clear();
+
+    	Total.setText("0");
+    	Subtotal.setText("0");
+
+       // for(int i=0; i<CartGrid.getChildren().size() ; i++)        	
+    	CartGrid.getChildren().clear();
+    	CartRow=1;
+    	
+    }
+    
+    public  List<CartProduct> getCart()
+    {
+    	ArrayList<CartProduct> products=new ArrayList<CartProduct>();
+    	for(int i=0 ; i<cartproducts.size(); i++)
+    	{
+    	CartProduct e=new CartProduct();
+    	e.setName(cartproducts.get(i).getCartFood());
+    	e.setPrice(cartproducts.get(i).getCartPrice());
+    	e.setQuantity(cartproducts.get(i).getQuantity());
+    	products.add(e);
+    	}
+    return products;
+    }
+
     public void setTableno(int value)
     {
        Tableno.setText(Integer.toString(value));
@@ -121,9 +141,9 @@ public class MenuController implements Initializable  {
     public int getTableno()
     {
     	int val=0;
-      String value=Tableno.getText();
-      if(value!="Table No")
-    	  val=Integer.parseInt(value);
+      //String value=Tableno.getText();
+      if(Tableno!=null)
+    	  val=Integer.parseInt(	Tableno.getText());
     return val;
     }
     
@@ -194,17 +214,25 @@ public class MenuController implements Initializable  {
     }
 
 
-
+ 
     public void initialize(URL location, ResourceBundle resources) {
         listview.setItems(items);
+     //   Tableno=new TextField();
         products=new ArrayList<Product>();
         cartproducts=new ArrayList<CartController>();
         itemController=new ArrayList<ItemController>();
+        Tableno.setText("0");
         Discount.setText("0");
         Total.setText("0");
         this.setGST(5.0);
         CashPayment.setValue(PaymentMethod.get(1));
         CashPayment.setItems(PaymentMethod);
+        
+        
+        //setting out the checkout Button
+		FXMLLoader fxmlLoader = new FXMLLoader();
+	    
+
         
         //  grid=new GridPane();
         this.products.addAll(this.getData());
@@ -218,12 +246,12 @@ public class MenuController implements Initializable  {
 			  System.out.println(this.products.get(i).getName());
 			  System.out.println(this.products.get(i).getImgPath());
 			  //System.out.println(this.products.get(0).getName());
-			FXMLLoader fxmlLoader = new FXMLLoader();
-		    fxmlLoader.setLocation(this.getClass().getResource("Product.fxml"));
-		    AnchorPane anchorPane = null;
+			  FXMLLoader fxmlLoader2 = new FXMLLoader();	
+		    fxmlLoader2.setLocation(this.getClass().getResource("Product.fxml"));
+		       AnchorPane anchorPane = null;
 		  
-			anchorPane = (AnchorPane)fxmlLoader.load();
-			itemController.add((ItemController)fxmlLoader.getController()) ;
+			anchorPane = (AnchorPane)fxmlLoader2.load();
+			itemController.add((ItemController)fxmlLoader2.getController()) ;
 		    itemController.get(i).setData((Product)this.products.get(i));
 		    if (column == 2) {
 		        column = 0;
@@ -250,7 +278,7 @@ public class MenuController implements Initializable  {
     	Double total=0.0;
     	for(int i=0 ; i<cartproducts.size() ; i++)
     	{
-    		total+=Double.parseDouble(cartproducts.get(i).getCartPrice());
+    		total+=cartproducts.get(i).getCartPrice();
     	}
     	Subtotal.setText(Double.toString(total));
     	Double discount=this.getDiscount();
@@ -261,10 +289,7 @@ public class MenuController implements Initializable  {
     @FXML
     void ActionHandled(ActionEvent event) {
 
-    	 if(event.getSource()==Checkout)
-    	 {
-    		 System.out.println("checkout handled");
-    	 }
+   
     }
    
     
@@ -308,7 +333,7 @@ public class MenuController implements Initializable  {
    		       AnchorPane anchorPane = null;
    		       System.out.println("we been selected");
    			   anchorPane = (AnchorPane)fxmlLoader.load();
-   		
+   			 
    		    cartproducts.add((CartController)fxmlLoader.getController()) ;
    		    cartproducts.get(cartproducts.size()-1).setData(this.products.get(i).getName(),this.products.get(i).getPrice(), 1);
    		

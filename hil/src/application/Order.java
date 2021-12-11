@@ -1,6 +1,7 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Order {
 ArrayList<CartProduct> CartProducts;
@@ -16,8 +17,8 @@ public ArrayList<CartProduct> getCartProducts() {
 	return CartProducts;
 }
 
-public void setCartProducts(ArrayList<CartProduct> cartProducts) {
-	CartProducts = cartProducts;
+public void setCartProducts(List<CartProduct> list) {
+	CartProducts = (ArrayList<CartProduct>) list;
 }
 
 public int getTableNo() {

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -50,7 +49,6 @@
             <Label fx:id="Subtotal" layoutX="213.0" layoutY="515.0" onDragDetected="#ActionHandled" prefHeight="18.0" prefWidth="53.0" text="Label" textFill="#f4eded" />
             <Label fx:id="Discount" layoutX="213.0" layoutY="543.0" onDragDetected="#ActionHandled" prefHeight="18.0" prefWidth="53.0" text="Label" textFill="#faf6f6" />
             <Label fx:id="GST" layoutX="213.0" layoutY="575.0" onDragDetected="#ActionHandled" prefHeight="18.0" prefWidth="75.0" text="Label" textFill="#fcfafa" />
-            <Button fx:id="Checkout" layoutX="197.0" layoutY="659.0" mnemonicParsing="false" onAction="#ActionHandled" prefHeight="33.0" prefWidth="86.0" style="-fx-background-color: #BFBFBF;" text="Check Out" textFill="#030101" />
             <ComboBox fx:id="CashPayment" layoutX="19.0" layoutY="661.0" onAction="#ActionHandled" prefWidth="150.0" promptText="Cash Payment" />
             <Label layoutX="30.0" layoutY="542.0" prefHeight="18.0" prefWidth="75.0" text="Discount %" textFill="#f7f1f1">
                <font>

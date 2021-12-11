@@ -30,7 +30,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 		
-			Parent root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("Checkout.fxml"));
 	        
 	        Scene scene = new Scene(root);
 	        
@@ -38,6 +38,7 @@ public class Main extends Application {
 	        primaryStage.centerOnScreen();
 	        primaryStage.setTitle("i192029");
 	        primaryStage.show();
+	        
 		} catch(Exception e) {
 		System.out.println("error detected");
 			e.printStackTrace();

@@ -23,8 +23,8 @@ public class CartController {
 	public void setCartFood(String cartFood) {
 		CartFood.setText(cartFood);
 	}
-	public String getCartPrice() {
-		return CartPrice.getText();
+	public Double getCartPrice() {
+		return Double.parseDouble(CartPrice.getText());
 	}
 	public void setCartPrice(Double cartPrice) {
 		CartPrice.setText(Double.toString(cartPrice));
